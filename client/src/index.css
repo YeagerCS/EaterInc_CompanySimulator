@@ -1,0 +1,107 @@
+body {
+  background-color: #2b303b;
+  font-family: "Century Gothic";
+  color: white;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  width: 650px;
+  background-color: rgb(70, 78, 94);
+  padding: 25px;
+  gap: 5px;
+  border-radius: 10px;
+}
+
+.form h1{
+  color: lime
+}
+/*  */
+.form-group{
+  display: flex;
+  gap: 5px;
+  font-weight: bolder;
+  flex-direction: column;
+  font-size: 25px;
+}
+
+.form-div{
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  max-width: 100%;
+} 
+
+.form-input{
+  font-family: "Century Gothic";
+  font-size: 22px;
+  padding: 5px;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  transition: .7s;
+  background-color: #2b303b;
+}
+
+.form-input:hover{
+  box-shadow: -2px 2px 22px -1px rgba(255, 255, 255, 0.74);
+}
+
+#form-button{
+  padding: 7.5px;
+  transition: .5s;
+}
+
+#form-button:hover{
+  cursor: pointer;
+}
+
+#form-button:active{
+  transition: .1s;
+  box-shadow: -2px 2px 40px -1px rgba(255, 255, 255, 0.74);
+}
+
+.main-div{
+  display: flex;
+  height: 80vh;
+  align-items: center;
+  flex-wrap: wrap;
+
+}
+
+.table-container {
+  margin: 20px auto;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.table {
+  max-width:  900px;
+  border-collapse: collapse;
+  background-color: rgb(70, 78, 94);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.table th, .table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #4a5162;
+  font-size: 18px;
+  transition: .4s;
+  color: white;
+}
+
+.table th {
+  background-color: #39414d;
+  color: lime;
+}
+
+.table tr:hover {
+  background-color: #3e4554;
+}
+

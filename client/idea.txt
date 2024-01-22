@@ -1,0 +1,3 @@
+Every added employee gets generated their account. 
+The admin can send messages to the employee
+the admin can send salary with standard deviation to employees

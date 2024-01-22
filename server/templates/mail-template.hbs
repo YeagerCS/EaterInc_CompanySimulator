@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{subject}}</title>
+    <style>
+        body{
+            background-color: #2b303b;
+            color: white;
+            font-family: "Century Gothic";
+            display: flex;
+            flex-direction: column;
+            font-size: 18px;
+        }
+        .pw{
+            color: lime;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <p>Dear {{recipient}},</p>
+    </div>
+    <div>
+        <p>Your employee account with employee number {{employeeNr}}, was just generated</p>
+        <p>Please find your newly generated employee password: <strong class="pw"><code>{{password}}</code></strong></p>
+    </div>
+    <div>
+        <p>Do not share the password with anyone and do not delete this email. If you have trouble with your login, contact <code>lejsdev@gmail.com</code>.</p>
+        <p>Kind regards</p>
+        <strong>The Eater Team</strong>
+    </div>
+</body>
+</html>
