@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useLocalstorage } from '../../contexts/useLocalstorage';
 import axios from 'axios';
-import { GET_employees } from '../../apiroutes/routes';
 import { useEmployees } from '../../contexts/DatabaseProvider';
+import { formatCurrency } from '../../services/formatCurrency';
 
 export default function Employees() {
     const { employees } = useEmployees()
@@ -27,7 +26,7 @@ export default function Employees() {
                             <td>{employee.lastname}</td>
                             <td>{employee.email}</td>
                             <td>{employee.job}</td>
-                            <td>${employee.salary}</td>
+                            <td>{formatCurrency(employee.salary)}</td>
                         </tr>
                     )
                 })}

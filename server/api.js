@@ -1,4 +1,7 @@
 export const POST_employees = "/api/addEmployee"
 export const GET_employees = "/api/employees"
-export const GET_employee = "/api/employee"
 export const GET_accounts = "/api/accounts"
+export const POST_login = "/login"
+export const GET_verifyjwt = "/api/jwt"
+export const GET_banks = "/api/banks"
+export const POST_bank = "/api/account/bank"

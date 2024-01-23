@@ -1,4 +1,7 @@
 import Account from "../models/account"
+import BankAccount from "../models/bankAccount";
+import Employee from "../models/employee";
+import { verifyToken } from "../services/jwtService";
 
 const retrieveAccounts = async (req, res) => {
     const accounts = await Account.findAll();
@@ -13,4 +16,21 @@ const getAccountById = async (req, res) => {
     res.json(account)
 }
 
-export {retrieveAccounts, getAccountById}
+const assignBankToAccount = async (req, res) => {
+    const { bank, id } = req.body;
+    const employee = await Employee.findOne({
+        where:{
+            id: id
+        }
+    })
+    const initialBalance = parseInt(employee.salary)
+    const bankAccount = await BankAccount.create({
+        reference: crypto.randomUUID(),
+        balance: initialBalance + (initialBalance * bank.interest),
+        transactions: []
+    })
+    await employee.update({ BankAccountId: bankAccount.id })
+    res.status(200).json({message: "Successfully Assigned Bank", bankAccount: bankAccount})
+}
+
+export {retrieveAccounts, getAccountById, assignBankToAccount}

@@ -23,7 +23,7 @@ export const DatabaseProvider = ({ children }) => {
   
     const addEmployee = async(employee) => {
         try{
-            const response = await axios.post(POST_employees , employee)
+            const response = await axios.post(POST_employees, employee)
             console.log("Successfully added employee");
             console.log(response);
             
@@ -37,6 +37,7 @@ export const DatabaseProvider = ({ children }) => {
       employees,
       setDbctxReload,
       addEmployee,
+      dbctxReload
     };
   
     return (

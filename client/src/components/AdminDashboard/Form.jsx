@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import NumericInput from '../SupportComponents/NumericInput'
 import { useLocalstorage } from '../../contexts/useLocalstorage'
-import Employee from '../../classes/Employee'
+import Employee from '../../models/Employee'
 import { useEmployees } from '../../contexts/DatabaseProvider'
 
 export default function Form() {

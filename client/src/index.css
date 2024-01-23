@@ -44,6 +44,12 @@ body {
   background-color: #2b303b;
 }
 
+.form-input:disabled{
+  text-align: center;
+  padding: 20px;
+  font-size: 28px;
+}
+
 .form-input:hover{
   box-shadow: -2px 2px 22px -1px rgba(255, 255, 255, 0.74);
 }
@@ -105,3 +111,20 @@ body {
   background-color: #3e4554;
 }
 
+.init-bank-div{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 30px;
+}
+
+.init-bank-div table{
+  cursor: pointer;
+  max-width: 1200px;
+}
+
+.init-bank-div th, .init-bank-div td {
+  font-size: 25px;
+}

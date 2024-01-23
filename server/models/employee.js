@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../sequelize/sequelize";
+import BankAccount from "./bankAccount";
 
 const Employee = sequelize.define("Employee", {
     id: {
@@ -28,5 +29,7 @@ const Employee = sequelize.define("Employee", {
         allowNull: false
     },
 })
+
+Employee.belongsTo(BankAccount)
 
 export default Employee;

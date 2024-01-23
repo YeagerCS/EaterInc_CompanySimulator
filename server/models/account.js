@@ -11,6 +11,11 @@ const Account = sequelize.define("Account", {
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    initialized: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 })
 
@@ -21,7 +26,7 @@ Account.generateNewEmployeeNumber = async () => {
     })
 
     if(lastAccount){
-        const employeeNr = lastAccount.employeeNr;
+        const employeeNr = parseInt(lastAccount.employeeNr);
 
         return employeeNr + 1;
     } else{
