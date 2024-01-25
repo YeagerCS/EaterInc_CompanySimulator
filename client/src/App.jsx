@@ -7,6 +7,7 @@ import Login from './components/Authentication/Login'
 import AuthenticationProvider from './contexts/AuthenticationProvider'
 import EmployeeDashboard from './components/Dashboard/EmployeeDashboard'
 import InitBank from './components/InitBank/InitBank'
+import Home from './Home/Home'
 
 function App() {
   return (
@@ -14,9 +15,10 @@ function App() {
       <AuthenticationProvider>
       <BrowserRouter>
         <Routes>
-          <Route exact path='/' element={<Dashboard/>}/>
+          <Route exact path='/' element={<Home/>}/>
           <Route exact path='/login' element={<Login/>}/>
           <Route exact path='/dashboard' element={<EmployeeDashboard/>}/>
+          <Route exact path='/admin' element={<Dashboard/>}/>
           <Route exact path='/initBank' element={<InitBank/>}/>
         </Routes>
       </BrowserRouter>

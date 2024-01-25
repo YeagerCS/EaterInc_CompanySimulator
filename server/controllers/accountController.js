@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import Account from "../models/account"
 import BankAccount from "../models/bankAccount";
 import Employee from "../models/employee";
@@ -25,9 +26,11 @@ const assignBankToAccount = async (req, res) => {
     })
     const initialBalance = parseInt(employee.salary)
     const bankAccount = await BankAccount.create({
+        id: v4(),
         reference: crypto.randomUUID(),
         balance: initialBalance + (initialBalance * bank.interest),
-        transactions: []
+        BankId: bank.id,
+        transactionIds: []
     })
     await employee.update({ BankAccountId: bankAccount.id })
     res.status(200).json({message: "Successfully Assigned Bank", bankAccount: bankAccount})

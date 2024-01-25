@@ -5,4 +5,14 @@ const retrieveBanks = async (req, res) => {
     res.json(bank)
 }
 
-export { retrieveBanks }
+const getBankById = async(req, res) => {
+    const id = req.params.id;
+    const bank = await Bank.findOne({
+        where:{
+            id: id
+        }
+    })
+    res.json(bank)
+}
+
+export { retrieveBanks, getBankById }

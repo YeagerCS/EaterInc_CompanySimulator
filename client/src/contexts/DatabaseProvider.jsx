@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { GET_employees, POST_employees } from "../apiroutes/routes";
+import { GET_bankAccount, GET_banks, GET_employees, POST_employees } from "../apiroutes/routes";
 
 const DatabaseContext = createContext();
 
@@ -32,12 +32,33 @@ export const DatabaseProvider = ({ children }) => {
         }
         setDbctxReload(true)
     };
+
+    const getBankAccountById = async (id) => {
+        try{
+            const response = await axios.post(GET_bankAccount, { id: id })
+            return response.data.BankAccount;
+        } catch(err){
+            console.log(err);
+        }
+    }
+
+    const getBankById = async(id) => {
+        try{
+            const response = await axios.get(GET_banks + "/" + id);
+
+            return response.data;
+        } catch(err){
+            console.log(err);
+        }
+    }
   
     const value = {
       employees,
       setDbctxReload,
       addEmployee,
-      dbctxReload
+      dbctxReload,
+      getBankAccountById,
+      getBankById
     };
   
     return (

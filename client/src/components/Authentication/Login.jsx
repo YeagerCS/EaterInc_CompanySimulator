@@ -14,8 +14,10 @@ export default function Login() {
     e.preventDefault();
 
     const firstInit = await authContext.handleLogin(employeeNr, password)
-    if(firstInit){
+    if(firstInit && employeeNr !== 1000){
+      console.log("tf");
       navigate("/initBank")
+      return;
     }
     setEmployeeNr("")
     setPassword("")

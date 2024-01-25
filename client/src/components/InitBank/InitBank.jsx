@@ -4,44 +4,45 @@ import { GET_banks, POST_bank } from '../../apiroutes/routes';
 import { formatCurrency } from '../../services/formatCurrency';
 import { useAuth } from '../../contexts/AuthenticationProvider';
 import Account from '../../models/Account';
+import { useNavigate } from 'react-router-dom';
 
 export default function InitBank() {
     const [banks, setBanks] = useState([]);
     const [account, setAccount] = useState(new Account())
-
+    const navigate = useNavigate();
     const authContext = useAuth();
 
 
     useEffect(() => {
-        async function fetchBanks(){
-            try{
+        async function fetchData() {
+            try {
                 const response = await axios.get(GET_banks);
-                setBanks(response.data)
-            } catch(err){
+                setBanks(response.data);
+    
+                if (authContext.jwt) {
+                    const _account = await authContext.getAccountByJWT(authContext.jwt);
+                    setAccount(_account);
+                }
+            } catch (err) {
                 console.error(err);
             }
         }
+    
+        fetchData();
 
-        async function fetchAccount(){
-            try{
-                const _account = await authContext.getAccountByJWT(authContext.jwt)
-                setAccount(_account)
-            } catch(err){
-                console.error(err);
-            }
-        }
-
-        fetchBanks()
-        fetchAccount()
-    }, [])
+    }, [authContext.jwt])
 
     const handleChooseBank = async (bank) => {
-        console.log(account);
         try{
-            await axios.post(POST_bank, { bank: bank})
+            const response = await axios.post(POST_bank, { bank: bank, id: account.employee.id })
+            navigate("/dashboard")
         } catch(error){
             console.error(error);
         }
+    }
+
+    if(authContext.loading){
+        return <div>Loading...</div>
     }
 
     return (

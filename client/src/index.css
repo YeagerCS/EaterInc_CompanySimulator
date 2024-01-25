@@ -128,3 +128,52 @@ body {
 .init-bank-div th, .init-bank-div td {
   font-size: 25px;
 }
+
+.home-nav{
+  background-color: rgb(70, 78, 94);
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 80%;
+  height: 500px;
+  border-radius: 25px;
+  transition: .6s;
+}
+
+.home-nav p{
+  font-size: 40px;
+}
+
+.home-nav em, .home-nav strong{
+  font-size: 25px;
+}
+
+.home-nav em{
+  color: lime;
+}
+
+.home-nav:hover{
+  cursor: pointer;
+  box-shadow: -2px 2px 22px -1px rgba(255, 255, 255, 0.74);
+}
+
+.home-nav:active{
+  transition: .1s;
+  box-shadow: -2px 2px 40px -1px rgba(255, 255, 255, 0.74);
+}
+
+.home-div{
+  gap: 2em;
+  height: 100%;
+}
+
+.logo img, .logo{
+  height: 125px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+header nav{
+  display: flex;
+}

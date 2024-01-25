@@ -3,18 +3,9 @@ import { useAuth } from '../../contexts/AuthenticationProvider'
 import Account from '../../models/Account.ts'
 import { formatCurrency } from '../../services/formatCurrency.jsx'
 
-export default function EmployeeInformation() {
+export default function EmployeeInformation({ account }) {
     const authContext = useAuth()
-    const [account, setAccount] = useState(new Account())
 
-    useEffect(() => {
-        async function fetchAccount(){
-            const _account = await authContext.getAccountByJWT(authContext.jwt);
-            setAccount(_account)
-        }   
-
-        fetchAccount()
-    }, [authContext])
 
     return (
         <div className='form-div'>
@@ -30,7 +21,7 @@ export default function EmployeeInformation() {
                         <input type="text" name='email' className='form-input' value={account.employee.email} disabled/>
                     </div>
                     <div className='form-group'>
-                        <label htmlFor="job">Job Title Name</label>
+                        <label htmlFor="job">Job Title</label>
                         <input type="text" name='job' className='form-input' value={account.employee.job} disabled/>
                     </div>
                     <div className='form-group'>
