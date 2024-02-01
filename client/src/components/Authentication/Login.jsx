@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { POST_login } from '../../apiroutes/routes';
 import { useAuth } from '../../contexts/AuthenticationProvider';
 import { useNavigate } from 'react-router-dom';
-
+import HomeHeader from "../../Headers/HomeHeader"
 export default function Login() {
   const [employeeNr, setEmployeeNr] = useState("")
   const [password, setPassword] = useState("")
@@ -14,8 +14,7 @@ export default function Login() {
     e.preventDefault();
 
     const firstInit = await authContext.handleLogin(employeeNr, password)
-    if(firstInit && employeeNr !== 1000){
-      console.log("tf");
+    if(firstInit && employeeNr != 1000){
       navigate("/initBank")
       return;
     }
@@ -25,23 +24,26 @@ export default function Login() {
   }
 
   return (
-    <div className="main-div">
-      <div className='form-div'>
-          <form className='form' onSubmit={handleSubmit}>
-              <h1>Login</h1>
-              <div className='form-group'>
-                  <label htmlFor="employeeNr">Employee Number</label>
-                  <input type="text" name='employeeNr' className='form-input' value={employeeNr} onChange={(e) => setEmployeeNr(e.target.value)}/>
-              </div>
-              <div className='form-group'>
-                  <label htmlFor="password">Password</label>
-                  <input type="password" name='password' className='form-input' value={password} onChange={(e) => setPassword(e.target.value)}/>
-              </div>
-              <div className="form-group">
-                  <input type="submit" className='form-input' value="Submit" id='form-button'/>
-              </div>
-          </form>
+    <>
+      <HomeHeader/>
+      <div className="main-div home-div">
+        <div className='form-div'>
+            <form className='form' onSubmit={handleSubmit}>
+                <h1>Login</h1>
+                <div className='form-group'>
+                    <label htmlFor="employeeNr">Employee Number</label>
+                    <input type="text" name='employeeNr' className='form-input' value={employeeNr} onChange={(e) => setEmployeeNr(e.target.value)}/>
+                </div>
+                <div className='form-group'>
+                    <label htmlFor="password">Password</label>
+                    <input type="password" name='password' className='form-input' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                </div>
+                <div className="form-group">
+                    <input type="submit" className='form-input' value="Submit" id='form-button'/>
+                </div>
+            </form>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

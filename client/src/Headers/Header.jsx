@@ -17,6 +17,9 @@ export default function Header() {
         <nav>
             <Logo/>
             <button className='form-input' id="form-button" onClick={handleLogout}>Logout</button>
+            <button className='form-input' id="form-button" onClick={() => navigate("/login")}>New Login</button>
+            <button className='form-input' id="form-button" onClick={() => navigate("/dashboard")}>Dashboard</button>
+            <button className='form-input' id="form-button" onClick={() => navigate("/admin")}>Admin</button>
         </nav>
     </header>
   )

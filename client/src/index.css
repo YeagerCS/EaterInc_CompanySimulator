@@ -10,8 +10,8 @@ body {
   width: 650px;
   background-color: rgb(70, 78, 94);
   padding: 25px;
-  gap: 5px;
   border-radius: 10px;
+  gap: 5px;
 }
 
 .form h1{
@@ -32,6 +32,7 @@ body {
   flex: 1;
   max-width: 100%;
 } 
+
 
 .form-input{
   font-family: "Century Gothic";
@@ -73,7 +74,7 @@ body {
   height: 80vh;
   align-items: center;
   flex-wrap: wrap;
-
+  gap: 7.5px;
 }
 
 .table-container {
@@ -171,9 +172,13 @@ body {
 .logo img, .logo{
   height: 125px;
   width: fit-content;
+  transition: .4s;
   cursor: pointer;
 }
 
+
 header nav{
   display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }

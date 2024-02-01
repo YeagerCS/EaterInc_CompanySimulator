@@ -6,26 +6,28 @@ import BankAccount from "../models/bankAccount"
 
 const initAdmin = async () => {
     const bankAccount = await BankAccount.findOne();
+    const employees = await Employee.findAll();
 
-
-    const admin = await Employee.create({
-        id: v4(),
-        firstname: "the",
-        lastname: "admin",
-        email: "lejsdev@gmail.com",
-        job: "CEO",
-        salary: 0,
-        BankAccountId: bankAccount.id
-    })
-    const employeePw = "the"
-    const employeePwHashed = await bcrypt.hash(employeePw, 10)
-
-
-    const adminAccount = await Account.create({
-        employeeNr: 1000,
-        password: employeePwHashed,
-        EmployeeId: admin.id
-    })
+    if(employees.length === 0){
+        const admin = await Employee.create({
+            id: v4(),
+            firstname: "the",
+            lastname: "admin",
+            email: "lejsdev@gmail.com",
+            job: "CEO",
+            salary: 0,
+            BankAccountId: bankAccount.id
+        })
+        const employeePw = "the"
+        const employeePwHashed = await bcrypt.hash(employeePw, 10)
+    
+    
+        const adminAccount = await Account.create({
+            employeeNr: 1000,
+            password: employeePwHashed,
+            EmployeeId: admin.id
+        })
+    }
 }
 
 export default initAdmin;
