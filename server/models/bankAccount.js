@@ -16,14 +16,10 @@ const BankAccount = sequelize.define("BankAccount", {
     balance: {
         type: DataTypes.NUMBER,
         allowNull: false
-    },
-    transactionIds: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
-        allowNull: false
     }
 })
 
-BankAccount.hasMany(Transaction, { foreignKey: "bankAccountId" })
+BankAccount.hasMany(Transaction, { foreignKey: "bankAccountId", as: "transactions" })
 
 BankAccount.belongsTo(Bank)
 

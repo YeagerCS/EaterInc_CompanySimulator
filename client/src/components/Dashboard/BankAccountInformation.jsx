@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useEmployees } from '../../contexts/DatabaseProvider'
-import { useAuth } from '../../contexts/AuthenticationProvider'
-import Account from '../../models/Account'
 import { formatCurrency } from '../../services/formatCurrency'
+import Modal from '../models/Modal'
+import TransactionTable from '../Transactions/TransactionTable'
 
 export default function BankAccountInformation({ account }) {
     const [bankAccount, setBankAccount] = useState(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const [bank, setBank] = useState(null);
     const employeeContext = useEmployees();
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const openModal = () => {
+        setIsModalOpen(true)
+    }
 
     useEffect(() => {
         async function fetchData() {
@@ -37,13 +46,16 @@ export default function BankAccountInformation({ account }) {
                         <input type="text" name='balance' className='form-input' disabled value={formatCurrency(bankAccount.balance)}/>
                     </div>
                     <div className='form-group'>
-                        <label htmlFor="job">Yearly Interest Rate</label>
-                        <input type="text" name='job' className='form-input' disabled value={bank.interest * 100 + "%"}/>
+                        <label htmlFor="interest">Yearly Interest Rate</label>
+                        <input type="text" name='interest' className='form-input' disabled value={bank.interest * 100 + "%"}/>
                     </div>
                     <div className='form-group'>
-                        <label htmlFor="salary">Transactions</label>
-                        <input type="text" name='salary' className='form-input'disabled/>
+                        <label htmlFor="transactions">Transactions</label>
+                        <input type="button" name='transactions' id="transactions" className='form-input' value={"View"} onClick={openModal}/>
                     </div>
+                    <Modal isOpen={isModalOpen} onClose={closeModal}>
+                        <TransactionTable transactions={bankAccount.transactions}/>
+                    </Modal>
                 </form>
             }
         </div>

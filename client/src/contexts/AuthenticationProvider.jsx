@@ -15,7 +15,6 @@ export default function AuthenticationProvider ({ children }) {
     useEffect(() => {
         const storedJwt = localStorage.getItem(LS_PREFIX + "jwt")
         if(storedJwt) {
-            console.log("the man");
             setJwt(storedJwt);
         }
         setLoading(false)
@@ -50,7 +49,7 @@ export default function AuthenticationProvider ({ children }) {
 
     const value = {
         jwt, handleLogin, getAccountByJWT, authctxReload, 
-        setAuthctxReload, handleLogout
+        setAuthctxReload, handleLogout, loading
     }
 
     return <AuthenticationContext.Provider value={value}>{children}</AuthenticationContext.Provider>

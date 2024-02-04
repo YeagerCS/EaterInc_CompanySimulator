@@ -1,3 +1,11 @@
-Every added employee gets generated their account. 
-The admin can send messages to the employee
-the admin can send salary with standard deviation to employees
+Every added employee gets their account generated. 
+The admin can send messages to employees
+
+
+Bugs:
+    x The TransactionIds are just "[object Object]" strings
+    x Transactions with bankAccountIds are redundant.
+    
+Additions:
+    - Transactions to yourself should be denied with a dialog
+    - Component to show for successful transactions
