@@ -9,3 +9,5 @@ export const GET_verifyjwt = uri + "/api/jwt"
 export const GET_banks = uri + "/api/banks"
 export const POST_bank = uri + "/api/account/bank"
 export const GET_bankAccount = uri + "/api/bankAccount";
+export const POST_transaction = uri + "/api/transfer"
+export const UPDATE_employee = uri + "/api/update/employee"

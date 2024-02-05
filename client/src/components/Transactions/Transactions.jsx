@@ -8,6 +8,7 @@ import TransactionTable from './TransactionTable'
 export default function Transactions() {
   const [bankAccount, setBankAccount] = useState(null)
   const [transactions, setTransactions] = useState([])
+  const [reload, setReload] = useState(false)
   const authContext = useAuth();
   const databaseContext = useEmployees();
 
@@ -19,6 +20,8 @@ export default function Transactions() {
         return;
       }
 
+      console.log("Eatenjoyer");
+
       const account = await authContext.getAccountByJWT(authContext.jwt);
       const _bankAccount = await databaseContext.getBankAccountById(account.employee.id)
       setBankAccount(_bankAccount)
@@ -28,11 +31,26 @@ export default function Transactions() {
     fetchAccount();
   }, [authContext])
 
+  useEffect(() => {
+    const fetchTransactions = async () =>{
+      try{  
+        const account = await authContext.getAccountByJWT(authContext.jwt);
+        const _bankAccount = await databaseContext.getBankAccountById(account.employee.id)
+        setBankAccount(_bankAccount)
+        setTransactions(_bankAccount.transactions)
+      } catch(err){
+        console.log(err);
+      }
+    }
+
+    fetchTransactions();
+  }, [reload])
+
   return (
     <>
       <Header/>
       <div className="main-div">
-        <TransactionForm bankAccount={bankAccount}/>
+        <TransactionForm bankAccount={bankAccount} setReload={setReload}/>
         <TransactionTable transactions={transactions}/>
       </div>
     </>

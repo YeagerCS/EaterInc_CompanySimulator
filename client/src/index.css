@@ -86,6 +86,7 @@ body {
   display: flex;
   flex: 1;
   justify-content: center;
+  flex-direction: column;
   max-width: 100%;
 }
 
@@ -187,6 +188,7 @@ header nav{
   flex-wrap: wrap;
 }
 
+
 input#transactions{
   color: lime;
   font-weight: bolder;
@@ -283,4 +285,40 @@ input#transactions{
 .dropdown small{
   font-size: 15px;
   color: rgba(255, 255, 255, .7375)
+}
+
+.ceo-image{
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  transition: .3s;
+}
+
+.employee-image{
+  width: 360px;
+  transition: .3s;
+  height: 360px;
+  border-radius: 50%;
+}
+
+.employee-image:hover, .ceo-image:hover{
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  
+}
+
+.about-div{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  text-align: left;
+  gap: 10px;
+  font-size: 20px;
+}
+
+.paginator{
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
 }

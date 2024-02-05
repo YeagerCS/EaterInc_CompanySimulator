@@ -69,5 +69,24 @@ const initMailTemplate = (recipient, employeeNr, password) => {
     return template(dynamicData)
 }
 
+const updateEmployee = async (req, res) => {
+    const employeeData = req.body;
+    console.log(employeeData);
 
-export { addEmployee, retrieveEmployees, getEmployeeById }
+    try{
+        const [updateRowsCount, updatedEmployee] = await Employee.update(employeeData, {
+            where: { id: employeeData.id }
+        });
+
+        if(updateRowsCount > 0){
+            res.json({ code: 200, message: "Successfully updated"})
+        } else {
+            res.status(404).json({ success: false, message: 'Employee not found' });
+        }
+    } catch(err){
+        console.log(err);
+    }
+}
+
+
+export { addEmployee, retrieveEmployees, getEmployeeById, updateEmployee }

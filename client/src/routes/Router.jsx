@@ -7,6 +7,7 @@ import Dashboard from '../components/AdminDashboard/Dashboard'
 import InitBank from '../components/InitBank/InitBank'
 import Transactions from '../components/Transactions/Transactions'
 import NotFound from '../components/404/NotFound'
+import AboutUs from '../components/AboutUs/AboutUs'
 
 export default function Router() {
   return (
@@ -18,6 +19,7 @@ export default function Router() {
             <Route path='/admin' element={<Dashboard/>}/>
             <Route path='/initBank' element={<InitBank/>}/>
             <Route path='/transactions' element={<Transactions/>}/>
+            <Route path='/aboutus' element={<AboutUs/>}/>
             <Route path='/*' element={<NotFound/>}/>
         </Routes>
     </BrowserRouter>

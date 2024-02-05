@@ -1,14 +1,15 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { GET_employees } from '../../apiroutes/routes'
+import { GET_employees, POST_transaction } from '../../apiroutes/routes'
 import { formatCurrency } from '../../services/formatCurrency'
+import Modal from '../models/Modal'
 
-export default function TransactionForm({ bankAccount }) {
+export default function TransactionForm({ bankAccount, setReload }) {
   const [reference, setReference] = useState("")
   const [matches, setMatches] = useState([])
+  const [amount, setAmount] = useState("")
+  const [showDialog, setShowDialog] = useState([false, ""])
 
-  useEffect(() => {
-  }, [])
 
   const handleReferenceInput = async (e) => {
     await fetchEmployees(e.target.value)
@@ -19,12 +20,21 @@ export default function TransactionForm({ bankAccount }) {
     setMatches(response.data.employees ?? [])
   }
 
-  const handleSubmit = () => {
-
+  const handleSubmit = async (e) => {
+    try{
+        e.preventDefault();
+        const response = await axios.post(POST_transaction, {source: bankAccount.reference, target: reference, amount: Number(amount)})
+        setReload(true)
+        setAmount("")
+        setReference("")
+    } catch(error){
+        console.log(error);
+    }
   } 
   
   const handleSelectEmployee = (employee) => {
     if(employee.BankAccount.reference === bankAccount.reference){
+        setShowDialog([true, "You can't send yourself money"])
         return; //TODO: Create dialog
     }
     setReference(employee.BankAccount.reference)
@@ -33,6 +43,9 @@ export default function TransactionForm({ bankAccount }) {
 
   return (
     <div className='form-div'>
+        <Modal isOpen={showDialog[0]} onClose={() => setShowDialog([false, ""])}>
+            <h2>{showDialog[1]}</h2>
+        </Modal>
         <form className='form' onSubmit={handleSubmit}>
             <h1>Complete Transaction</h1>
             <div className='form-group'>
@@ -60,8 +73,8 @@ export default function TransactionForm({ bankAccount }) {
                 )}
             </div>
             <div className='form-group'>
-                <label htmlFor="amount">Amount</label>
-                <input type="text" name='amount' className='form-input'/>
+                <label htmlFor="amount" >Amount</label>
+                <input type="text" name='amount' className='form-input' value={amount} onChange={(e) => setAmount(e.target.value)}/>
             </div>
             <div className="form-group">
                 <input type="submit" className='form-input' value="Submit" id='form-button'/>
