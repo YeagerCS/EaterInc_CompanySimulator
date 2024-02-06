@@ -30,6 +30,21 @@ const getBankAccountByName = async (req, res) => {
     res.json({employees: employees})
 }
 
+const getEmployeeByBankAccountReference = async (req, res) => {
+    const reference = req.params.reference;
+    const employee = await Employee.findOne({
+        include: {model: BankAccount, as: "BankAccount", where: {
+            reference: reference
+        }}
+    })
+
+    if(employee){
+        res.json(employee)
+    } else{
+        res.status(404).json("No employee with the reference " + reference + " was found.")
+    }
+}
+
 const getBankAccountById = async(req, res) => {
     const { id } = req.body;
     const employee = await Employee.findOne({
@@ -46,4 +61,4 @@ const getBankAccountById = async(req, res) => {
     res.json({BankAccount: bankAccount})
 }
 
-export { retrieveBankAccounts, getBankAccountById, getBankAccountByName}
+export { retrieveBankAccounts, getBankAccountById, getBankAccountByName, getEmployeeByBankAccountReference}

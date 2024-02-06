@@ -5,7 +5,7 @@ import Employee from "../models/employee";
 import { transferAmount } from "../controllers/transactionController";
 import Account from "../models/account";
 
-const salaryTransferInterval = 3 * 60 * 1000;//2 * 60 * 60 * 1000; //2h in ms
+const salaryTransferInterval = 60 * 60 * 1000;//2 * 60 * 60 * 1000; //2h in ms
 const timeStampFile = "timestamp.cfg"
 
 
@@ -53,7 +53,7 @@ const compileSimulation = async () => {
     });
 
     for(const employee of employees){
-        if(employee.BankAccount){
+        if(employee.BankAccount && employee.BankAccount.BankId != 1){
             const payout = await calculatePayout(employee)
             const bank = await Bank.findOne({
                 where:{

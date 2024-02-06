@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import sequelize from "./sequelize/sequelize"
-import { GET_accounts, GET_bankAccount, GET_banks, GET_employees, GET_transactions, GET_verifyjwt, POST_bank, POST_employees, POST_login, POST_transaction, UPDATE_employee } from "./api";
+import { GET_accounts, GET_bankAccount, GET_banks, GET_employees, GET_transactions, GET_verifyjwt, POST_bank, POST_employees, POST_loans, POST_login, POST_transaction, UPDATE_employee } from "./api";
 import { addEmployee, getEmployeeById, retrieveEmployees, updateEmployee } from "./controllers/employeeController";
 import { tryFunctionAsync } from "./utils/tryFunction";
 import { getAccountById, retrieveAccounts, assignBankToAccount } from "./controllers/accountController";
@@ -9,7 +9,7 @@ import { login } from "./controllers/authController";
 import { verifyToken } from "./services/jwtService";
 import { getBankById, retrieveBanks } from "./controllers/bankController";
 import { initBanks } from "./services/initBanks";
-import { getBankAccountById, getBankAccountByName, retrieveBankAccounts } from "./controllers/bankAccountController";
+import { getBankAccountById, getBankAccountByName, getEmployeeByBankAccountReference, retrieveBankAccounts } from "./controllers/bankAccountController";
 import initCompanyBankAccount from "./services/initCompanyBankAccount";
 import initAdmin from "./services/initAdmin";
 import { retrieveTransactions, transferAmountAsync } from "./controllers/transactionController";
@@ -62,7 +62,14 @@ app.post(POST_transaction, async (req, res) => {
     await tryFunctionAsync(transferAmountAsync, req, res)    
 })
 
+app.post(POST_loans, async (req, res) => {
+    await tryFunctionAsync()
+})
+
 //GET
+app.get(GET_bankAccount + "/:reference", async(req, res) => {
+    await tryFunctionAsync(getEmployeeByBankAccountReference, req, res)
+})
 app.get(GET_employees, async (req, res) => {
     const { id } = req.body;
     id ? await tryFunctionAsync(getEmployeeById, req, res) : 

@@ -322,3 +322,8 @@ input#transactions{
   justify-content: space-between;
   height: 70px;
 }
+
+#td-ref:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}

@@ -15,4 +15,12 @@ const getBankById = async(req, res) => {
     res.json(bank)
 }
 
+const grantLoan = async(req, res) => {
+    const { bankId, target } = req.body;
+}
+
+const transferLoan = async () => {
+
+}
+
 export { retrieveBanks, getBankById }

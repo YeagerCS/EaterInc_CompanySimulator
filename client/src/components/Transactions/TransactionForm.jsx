@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { GET_employees, POST_transaction } from '../../apiroutes/routes'
+import { GET_bankAccount, GET_employees, POST_transaction } from '../../apiroutes/routes'
 import { formatCurrency } from '../../services/formatCurrency'
 import Modal from '../models/Modal'
 
@@ -27,6 +27,8 @@ export default function TransactionForm({ bankAccount, setReload }) {
         setReload(true)
         setAmount("")
         setReference("")
+        const refResponse = await axios.get(GET_bankAccount + "/" + reference)
+        setShowDialog([true, `Successfully transferred ${formatCurrency(amount)} to ${refResponse.data.firstname + " " + refResponse.data.lastname}`])
     } catch(error){
         console.log(error);
     }
