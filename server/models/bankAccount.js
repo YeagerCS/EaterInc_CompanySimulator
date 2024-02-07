@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import sequelize from "../sequelize/sequelize";
 import Bank from "./bank";
 import Transaction from "./transaction";
+import Loan from "./loan";
 
 const BankAccount = sequelize.define("BankAccount", {
     id: {
@@ -20,6 +21,7 @@ const BankAccount = sequelize.define("BankAccount", {
 })
 
 BankAccount.hasMany(Transaction, { foreignKey: "bankAccountId", as: "transactions" })
+BankAccount.hasMany(Loan, { foreignKey: "bankAccountId", as: "loans" })
 
 BankAccount.belongsTo(Bank)
 

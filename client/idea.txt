@@ -7,5 +7,8 @@ Bugs:
     x Transactions with bankAccountIds are redundant.
     
 Additions:
-    - Transactions to yourself should be denied with a dialog
-    - Component to show for successful transactions
+    x Transactions to yourself should be denied with a dialog
+    x Component to show for successful transactions
+    - Create a simulation for the loan payment
+    - Display taken loans in a table
+    - Add column "active" to the Loan table

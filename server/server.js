@@ -1,19 +1,21 @@
 import express from "express"
 import cors from "cors"
 import sequelize from "./sequelize/sequelize"
-import { GET_accounts, GET_bankAccount, GET_banks, GET_employees, GET_transactions, GET_verifyjwt, POST_bank, POST_employees, POST_loans, POST_login, POST_transaction, UPDATE_employee } from "./api";
+import { GET_accounts, GET_bankAccount, GET_banks, GET_employees, GET_loans, GET_transactions, GET_verifyjwt, POST_bank, POST_employees, POST_loans, POST_login, POST_transaction, UPDATE_employee } from "./api";
 import { addEmployee, getEmployeeById, retrieveEmployees, updateEmployee } from "./controllers/employeeController";
 import { tryFunctionAsync } from "./utils/tryFunction";
 import { getAccountById, retrieveAccounts, assignBankToAccount } from "./controllers/accountController";
 import { login } from "./controllers/authController";
 import { verifyToken } from "./services/jwtService";
-import { getBankById, retrieveBanks } from "./controllers/bankController";
+import { getBankById, grantLoan, retrieveBanks } from "./controllers/bankController";
 import { initBanks } from "./services/initBanks";
 import { getBankAccountById, getBankAccountByName, getEmployeeByBankAccountReference, retrieveBankAccounts } from "./controllers/bankAccountController";
 import initCompanyBankAccount from "./services/initCompanyBankAccount";
 import initAdmin from "./services/initAdmin";
 import { retrieveTransactions, transferAmountAsync } from "./controllers/transactionController";
 import { simulateTransfers } from "./simulation/simulation";
+import BankAccount from "./models/bankAccount";
+import { retrieveLoans } from "./controllers/loanController";
 
 const app = express()
 const PORT = 5000;
@@ -63,7 +65,17 @@ app.post(POST_transaction, async (req, res) => {
 })
 
 app.post(POST_loans, async (req, res) => {
-    await tryFunctionAsync()
+    await tryFunctionAsync(grantLoan, req, res)
+})
+
+app.post("/admin", async(req, res) => {
+    const admin = await BankAccount.findOne({
+        where:{
+            BankId: 1
+        }
+    })
+
+    await admin.update({ balance: 4.5267 * 10 ** 6})
 })
 
 //GET
@@ -92,7 +104,9 @@ app.get(GET_banks + "/:id", async (req, res) => {
 app.get(GET_transactions, async (req, res) => {
     await tryFunctionAsync(retrieveTransactions, req, res)
 })
-
+app.get(GET_loans, async(req, res) => {
+    await tryFunctionAsync(retrieveLoans, req, res)
+})
 app.listen(PORT, () => {
     console.log("Server running on port " + PORT);
 })
