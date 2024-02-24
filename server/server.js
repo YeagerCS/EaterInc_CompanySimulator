@@ -1,8 +1,8 @@
 import express from "express"
 import cors from "cors"
 import sequelize from "./sequelize/sequelize"
-import { GET_accounts, GET_bankAccount, GET_banks, GET_employees, GET_loans, GET_transactions, GET_verifyjwt, POST_bank, POST_employees, POST_loans, POST_login, POST_transaction, UPDATE_employee } from "./api";
-import { addEmployee, getEmployeeById, retrieveEmployees, updateEmployee } from "./controllers/employeeController";
+import { GET_accounts, GET_bankAccount, GET_banks, GET_employees, GET_keyEmployees, GET_loans, GET_transactions, GET_verifyjwt, POST_bank, POST_employees, POST_keyEmployee, POST_loans, POST_login, POST_transaction, UPDATE_employee } from "./api";
+import { addEmployee, addKeyEmployee, getEmployeeById, getKeyEmployees, retrieveEmployees, updateEmployee } from "./controllers/employeeController";
 import { tryFunctionAsync } from "./utils/tryFunction";
 import { getAccountById, retrieveAccounts, assignBankToAccount } from "./controllers/accountController";
 import { login } from "./controllers/authController";
@@ -16,12 +16,16 @@ import { retrieveTransactions, transferAmountAsync } from "./controllers/transac
 import { simulateTransfers } from "./simulation/simulation";
 import BankAccount from "./models/bankAccount";
 import { retrieveLoans } from "./controllers/loanController";
+import { upload } from "./multer/multer";
+import KeyEmployee from "./models/keyEmployee";
+import path from "path"
 
 const app = express()
 const PORT = 5000;
 
 app.use(cors())
 app.use(express.json())
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 sequelize.sync().then(async () => {
@@ -67,7 +71,9 @@ app.post(POST_transaction, async (req, res) => {
 app.post(POST_loans, async (req, res) => {
     await tryFunctionAsync(grantLoan, req, res)
 })
-
+app.post(POST_keyEmployee, upload.single("image") ,async (req, res) => {
+    await tryFunctionAsync(addKeyEmployee, req, res)
+})
 app.post("/admin", async(req, res) => {
     const admin = await BankAccount.findOne({
         where:{
@@ -76,6 +82,9 @@ app.post("/admin", async(req, res) => {
     })
 
     await admin.update({ balance: 4.5267 * 10 ** 6})
+})
+app.get("/admin/clear", async(req, res)=> {
+    await KeyEmployee.truncate();
 })
 
 //GET
@@ -107,6 +116,10 @@ app.get(GET_transactions, async (req, res) => {
 app.get(GET_loans, async(req, res) => {
     await tryFunctionAsync(retrieveLoans, req, res)
 })
+app.get(GET_keyEmployees, async(req, res) => {
+    await tryFunctionAsync(getKeyEmployees, req, res);
+})
+
 app.listen(PORT, () => {
     console.log("Server running on port " + PORT);
 })

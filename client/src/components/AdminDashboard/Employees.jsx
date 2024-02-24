@@ -65,7 +65,7 @@ export default function Employees() {
                 <button id="form-button" className='form-input' onClick={handleNext} disabled={max === employees.length}>Next</button>
             </div>
             <Modal isOpen={employeeView} onClose={() => setEmployeeView(false)}>
-                <EditEmployee employee={selectedEmployee} onClose={closeModal} />
+                <EditEmployee employee={selectedEmployee} onClose={closeModal}/>
             </Modal>
         </div>
     )

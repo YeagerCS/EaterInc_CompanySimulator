@@ -7,6 +7,7 @@ import handlebars from "handlebars";
 import fs from "fs"
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
+import KeyEmployee from "../models/keyEmployee";
 
 
 const addEmployee = async (req, res) => {
@@ -23,6 +24,19 @@ const addEmployee = async (req, res) => {
         EmployeeId: employee.id
     })
     res.json({employee: employee, account: account})    
+}
+
+const addKeyEmployee = async(req, res) => {
+    const { id, ceo } = req.body;
+    const imageUri = req.file ? `/uploads/${req.file.filename}`: null;
+
+    const keyEmployee = await KeyEmployee.create({
+        image: imageUri,
+        EmployeeId: id,
+        ceo: ceo
+    });
+
+    res.json({keyEmployee})
 }
 
 const retrieveEmployees = async (req, res) => {
@@ -88,5 +102,12 @@ const updateEmployee = async (req, res) => {
     }
 }
 
+const getKeyEmployees = async (req, res) => {
+    const employees = await KeyEmployee.findAll({
+        include: {model: Employee, as: "Employee"}
+    });
+    res.json(employees);
+}
 
-export { addEmployee, retrieveEmployees, getEmployeeById, updateEmployee }
+
+export { addEmployee, retrieveEmployees, getEmployeeById, updateEmployee, getKeyEmployees, addKeyEmployee }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Employee from '../../models/Employee'
 import axios from 'axios';
 import { UPDATE_employee } from '../../apiroutes/routes';
+import KeyEmployeeForm from './KeyEmployeeForm';
 
 export default function EditEmployee({ employee, onClose }) {
   const [updatedEmployee, setUpdatedEmployee] = useState(employee ?? new Employee())
@@ -32,7 +33,8 @@ export default function EditEmployee({ employee, onClose }) {
 
   if(updatedEmployee){
     return (
-        <form className='form' onSubmit={handleSubmit}>
+        <div className='edit-modal'>
+          <form className='form' onSubmit={handleSubmit}>
             <div className='form-group'>
                 <label htmlFor="firstname">First Name</label>
                 <input type="text" name='firstname' className='form-input' value={updatedEmployee.firstname} onChange={handleChange}/>
@@ -56,7 +58,11 @@ export default function EditEmployee({ employee, onClose }) {
             <div className="form-group">
                 <input type="submit" className='form-input' value="Update" id='form-button'/>
             </div>
-        </form>
+          </form>
+          <div>
+            <KeyEmployeeForm id={employee && employee.id} ceo={Number(employee && employee.salary) == 0} onClose={onClose}/>
+          </div>
+        </div>
     )
   }
 
