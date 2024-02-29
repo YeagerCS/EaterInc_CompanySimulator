@@ -56,3 +56,37 @@ Each bank account belongs to a bank. Bank accounts have transaction that they've
 
 
 ### Transactions and Loans
+Transaction and Loans have similar properties:
+- source
+- target
+- amount
+- date
+- bankAccountId
+The source and target represent reference numbers of two bank accounts or banks. For every completed transaction, there exist at least two transaction objects. One with the source bankAccountId and one with the target bankAccountId, so that both parties can access their transactions easily.
+
+
+
+### Simulation
+The simulation asynchronously in the background. The entire simulation is implemented in `/server/simulation/simulation.js` and it works as follows: 
+- Months are defined within smaller intervals, eg. `1 Month <=> 1 Hour`
+- Salaries are paid monthly
+- Loans are paid back yearly
+- Every 15 minutes, a timestamp gets saved into a file for when the server would be shut down the timer doesn't start from 0.
+Each payment for a salary is sent from the admins bank account to the employees account.
+
+#### Math behind the payment
+##### Salary
+The yearly salary simply gets divided by 12 to obtain the monthly salary and this amount is also removed from the admins account. The total payout which an employee gets consists of the salary amount and an added intresest from their bank.  
+Banks have a yearly interest rate and since yearly percentage payments represent an exponential process of exponential growth, monthly that means that the interest that needs to be applied is the 12th root of the yearly interest. Here's an overview:
+```
+(salary / 12) + ((salary / 12) * (interest ^ (1/12)))
+```
+
+##### Loans
+Loans are paid back by the employee to the bank. The employee has to pay the amount and also the interest that the bank has. So that means:
+```
+amount + (amount * interest)
+```
+
+### Key Employees
+Key Employees is a table in the database that represents employees which are important for the company. These employees are then displayed on the 'About Us' page with their picture. In the admin dashboard, the admin can edit employees and also set an employee as a key employee by uploading a picutre for an employee. This employee will immedtialey be displayed on the about us page. The Chiefs are currently hardcodedly displayed as the top three employees, by checking if the word 'Chief' is in the job title, which can be done better.
