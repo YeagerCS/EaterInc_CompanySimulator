@@ -36,6 +36,17 @@ const transferAmount = async (source, target, amount) => {
     await createTransactions(source, target, amount, sourceAccount, targetAccount)
 }
 
+const payLoanAsync = async (source, bank, amount) => {
+    const sourceBalance = source.balance;
+
+    if(sourceBalance >= amount){
+        await source.update({ balance: sourceBalance - amount })
+        await bank.update({ capital: bank.capital + amount })
+    } else{
+        // TODO: handle if client currently can't pay the loan 
+    }
+}
+
 const createTransactions = async (source, target, amount, sourceAccount, targetAccount) => {
     const transaction1 = await Transaction.create({
         source: source,
@@ -62,4 +73,4 @@ const retrieveTransactions = async (req, res) => {
     res.json(transactions)
 }
 
-export { transferAmount, retrieveTransactions, transferAmountAsync }
+export { transferAmount, retrieveTransactions, transferAmountAsync, payLoanAsync }

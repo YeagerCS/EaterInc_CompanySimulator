@@ -9,6 +9,6 @@ Bugs:
 Additions:
     x Transactions to yourself should be denied with a dialog
     x Component to show for successful transactions
-    - Create a simulation for the loan payment
+    x Create a simulation for the loan payment
     - Display taken loans in a table
     - Add column "active" to the Loan table

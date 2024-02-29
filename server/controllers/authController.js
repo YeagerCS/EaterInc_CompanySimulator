@@ -12,7 +12,7 @@ const login = async (req, res) => {
 
         res.json({ token: token, firstInit: firstInit })
     } else{
-        res.status(401).json({ error: 'Invlaid Credentials' })
+        res.status(401).json({ error: 'Invalid Credentials' })
     }
 }
 

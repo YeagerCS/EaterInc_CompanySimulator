@@ -2,10 +2,12 @@ import fs from "fs"
 import BankAccount from "../models/bankAccount";
 import Bank from "../models/bank";
 import Employee from "../models/employee";
-import { transferAmount } from "../controllers/transactionController";
-import Account from "../models/account";
+import { payLoanAsync, transferAmount } from "../controllers/transactionController";
+import Loan from "../models/loan";
 
-const salaryTransferInterval = 60 * 60 * 1000;//2 * 60 * 60 * 1000; //2h in ms
+const salaryTransferInterval = 60 * 60 * 1000;//60 * 60 * 1000; //1h  <=> 1 month
+const loanTransferInterval = 12 * 60 * 60 * 1000; //12 * 60 * 60 * 1000 //12h <=> 1 year
+const timestampWriteInterval = 15 * 60 * 1000; //15 * 60 * 1000 //15min
 const timeStampFile = "timestamp.cfg"
 
 
@@ -24,9 +26,12 @@ const writeTimestamp = (timestamp) => {
 }
 
 const simulateTransfers = async () => {
-    //const lastTimeStamp = readLastTransferTimestamp()
-    //const currentTime = Date.now();
-    //const elapsedTime = currentTime - lastTimeStamp;
+    const lastTimeStamp = readLastTransferTimestamp();
+    const currentTime = Date.now();
+
+    let elapsedTime = currentTime - lastTimeStamp;
+    const remainingTime = loanTransferInterval - (elapsedTime % loanTransferInterval);
+
 
     setTimeout(async () => {
         await compileSimulation();
@@ -36,9 +41,46 @@ const simulateTransfers = async () => {
     setTimeout(() => {
         const newTimestamp = Date.now()
         writeTimestamp(newTimestamp)
-    }, 120 * 1000)
+        simulateTransfers();
+
+    }, timestampWriteInterval)
+
+    setTimeout(async () => {
+        await payLoan()
+        elapsedTime = 0;
+        simulateTransfers();
+    }, remainingTime)
 }
 
+const payLoan = async () => {
+    const admin = await BankAccount.findOne({
+        where: {
+            BankId: 1
+        }
+    })
+    
+    const loans = await Loan.findAll({
+        where:{
+            bankAccountId: admin.id
+        }
+    })
+
+    const bank = await Bank.findOne({
+        where: {
+            id: 1
+        }
+    })
+
+    const interest = bank.interest;
+
+    if(loans.length > 0){
+        // pay all loans
+        loans.forEach(async loan => {
+            const totalLoanAmount = loan.amount + (loan.amount * interest);
+            await payLoanAsync(admin, bank, totalLoanAmount);
+        })
+    }
+}
 
 const calculatePayout = async (employee) => {
     const yearlySalary = employee.salary;
@@ -46,6 +88,7 @@ const calculatePayout = async (employee) => {
 
     return monthlySalary;
 }
+
 
 const compileSimulation = async () => {
     const employees = await Employee.findAll({
