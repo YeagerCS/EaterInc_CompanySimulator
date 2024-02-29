@@ -15,6 +15,10 @@ const Loan = sequelize.define("Loan", {
         type: DataTypes.NUMBER,
         allowNull: false
     },
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
     bankAccountId: {
         type: DataTypes.INTEGER,
         allowNull: false,

@@ -12,6 +12,7 @@ const createLoan = async (bankId, target, amount) => { //target is the reference
         bank: bankId,
         target: target,
         amount: amount,
+        date: new Date(),
         bankAccountId: bankAccount.id
     })
 
